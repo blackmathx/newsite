@@ -1,6 +1,19 @@
+using newsite;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+// This automatically loads appsettings.json + appsettings.Development.json (in Development)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+
+
 // Add services to the container.
+builder.Services.AddScoped<newsite.Services.EmployeeRepo>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
