@@ -27,6 +27,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Map any routes that match the pattern "/{action=Index}" to the Home controller methods.
+app.MapControllerRoute(
+    name: "WelcomeRoute",
+    pattern: "/{action=Index}",
+    defaults: new { controller = "Home" });
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

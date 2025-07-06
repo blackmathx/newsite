@@ -1,8 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Newsite</h1>
 </div>
+
+@if (ViewBag.Posts != null)
+{
+    <div class="d-flex flex-column">
+        @foreach (var post in ViewBag.Posts)
+        {
+            <div class="m-2 w-100" style="min-width:320px; height:20px;">
+                <div class=" d-flex align-items-center">
+                    <span class="text-muted small mb-0 me-2" style="white-space:nowrap;">@post.PostedOn.ToString("MMM dd, yyyy")</span>
+                    <a href="@post.Url" target="_blank" class="text-decoration-none flex-grow-1">
+                        <span class="fw-bold mb-0" style="font-size:1rem;">@post.Title</span>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No posts available.</p>
+}
