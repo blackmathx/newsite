@@ -6,11 +6,11 @@ using newsite.Models;
 
 namespace newsite.Services
 {
-    public class EmployeeRepo
+    public class EmployeeRepository
     {
         private readonly AppDbContext _context;
 
-        public EmployeeRepo(AppDbContext context)
+        public EmployeeRepository(AppDbContext context)
         {
             _context = context;
         }
