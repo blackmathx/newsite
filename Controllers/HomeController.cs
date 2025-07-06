@@ -35,5 +35,13 @@ public class HomeController : Controller
 	{
 		return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 	}
+
+	// Accepts a POST request to add a new post
+	// This method will be called when the form is submitted
+	[HttpPost]
+	public IActionResult AddPost()
+	{
+		return View();
+	}
 	
 }
