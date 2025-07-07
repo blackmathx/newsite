@@ -13,6 +13,7 @@
             <th></th>
             <th>PostedOn</th>
 			<th>Submitted By</th>
+			<th>Active</th>
 			<th>Title</th>
             <th>Url</th>
             
@@ -28,6 +29,7 @@
 		</td>
         <td>@post.PostedOn.ToString("MMM dd, yyyy")</td>
 		<td>@post.SubmittedBy</td>
+		<td>@post.Active</td>
         <td>@post.Title</td>
         <td><a href=@post.Url target="_blank">@post.Url</a></td>
     </tr>

@@ -17,9 +17,9 @@ public class HomeController : Controller
 		_postRepository = postRepository;
 	}
 
-	public IActionResult Index()
+	public async Task<IActionResult> Index()
 	{
-		ViewBag.Posts = _postRepository.GetAllPosts();
+		ViewBag.Posts = await _postRepository.GetActivePosts();
 		return View();
 	}
 
