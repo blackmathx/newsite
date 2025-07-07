@@ -8,6 +8,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<newsite.Services.EmployeeRepository>();
+builder.Services.AddScoped<newsite.Services.PostRepository>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

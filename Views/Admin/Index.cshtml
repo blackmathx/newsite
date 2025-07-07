@@ -2,8 +2,36 @@
 
 <p>Admin Page</p>
 
-<ul>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Add">Add Post</a>
-</li>
+
+    <!-- <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="PostAdd">Add Post</a> -->
+    <a class="btn btn-primary" asp-action="PostAdd" asp-controller="Admin" >Add Post</a>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>PostedOn</th>
+			<th>Submitted By</th>
+			<th>Title</th>
+            <th>Url</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var post in ViewBag.Posts)
+{
+    <tr>
+        <td>
+			<a href="/Admin/PostDelete/@post.Id" class="btn btn-danger">Delete</a>
+			<a href="/Admin/PostEdit/@post.Id" class="btn btn-primary">Edit</a>
+		</td>
+        <td>@post.PostedOn.ToString("MMM dd, yyyy")</td>
+		<td>@post.SubmittedBy</td>
+        <td>@post.Title</td>
+        <td><a href=@post.Url target="_blank">@post.Url</a></td>
+    </tr>
+}
+</tbody>
+</table>
 </ul>

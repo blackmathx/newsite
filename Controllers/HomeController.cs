@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using newsite.Models;
-using static newsite.Services.PostData;
 
 namespace newsite.Controllers;
 
@@ -10,25 +9,20 @@ using newsite.Services;
 public class HomeController : Controller
 {
 	private readonly ILogger<HomeController> _logger;
-	private readonly EmployeeRepository _employeeRepo;
+	private readonly PostRepository _postRepository;
 
-	public HomeController(ILogger<HomeController> logger, EmployeeRepository employeeRepo)
+	public HomeController(ILogger<HomeController> logger, PostRepository postRepository)
 	{
 		_logger = logger;
-		_employeeRepo = employeeRepo;
+		_postRepository = postRepository;
 	}
 
 	public IActionResult Index()
 	{
-
-		ViewBag.Posts = PostData.GetPosts();
+		ViewBag.Posts = _postRepository.GetAllPosts();
 		return View();
 	}
 
-	public IActionResult Privacy()
-	{
-		return View();
-	}
 
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 	public IActionResult Error()
@@ -36,10 +30,23 @@ public class HomeController : Controller
 		return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 	}
 
-	// Accepts a POST request to add a new post
-	// This method will be called when the form is submitted
+	[HttpGet]
+	public IActionResult SubmitPost()
+	{
+		return View();
+	}
 	[HttpPost]
-	public IActionResult AddPost()
+	public IActionResult SubmitPost(Post post)
+	{
+		// Convert UTC to EST (UTC-5) for posting date
+		post.PostedOn = DateTime.UtcNow.AddHours(-5);
+		post.Active = false;
+		_postRepository.AddPost(post);
+		_postRepository.SaveChanges();
+		return RedirectToAction("Index");
+	}
+
+	public IActionResult Donate()
 	{
 		return View();
 	}

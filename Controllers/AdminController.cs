@@ -8,63 +8,64 @@ namespace NewSite.Controllers;
 public class AdminController : Controller
 {
 	private readonly ILogger<AdminController> _logger;
+	private readonly PostRepository _postRepository;
 
-	public AdminController(ILogger<AdminController> logger)
+	public AdminController(ILogger<AdminController> logger, PostRepository postRepository)
 	{
 		_logger = logger;
+		_postRepository = postRepository;
 	}
 
 	public IActionResult Index()
 	{
-		Console.WriteLine("AdminController Index action called");
+		ViewBag.Posts = _postRepository.GetAllPosts();
 		return View();
 	}
 
-	[Route("Admin/Post/{id}")]
-	public IActionResult Detail(int id)
+	public IActionResult PostDetail(int id)
 	{
-		Post? post = PostData.GetPosts().FirstOrDefault(p => p.Id == id);
+		Post? post = _postRepository.GetPostById(id);
 		ViewBag.Post = post;
-		return View("~/Views/Admin/Post/Detail.cshtml");
+		return View();
 	}
 
 	[HttpGet]
-	[Route("Admin/Post/Add")]
-	public IActionResult Add()
+	public IActionResult PostAdd()
 	{
-		return View("~/Views/Admin/Post/Add.cshtml");
+		return View();
 	}
 
 	[HttpPost]
-	[Route("Admin/Post/Add")]
 	[ValidateAntiForgeryToken]
-	public IActionResult Add(Post post)
+	public IActionResult PostAdd(Post post)
 	{
 		if (!ModelState.IsValid)
 		{
 			return View(post);
 		}
-		Console.WriteLine($"Adding post: {post.Title}, URL: {post.Url}, PostedOn: {DateTime.Now}");
-		// Todo: add a method to PostsRepository to save the post
-		// _postsRepository.AddPost(post);
+
+		// Convert UTC to EST (UTC-5) for posting date
+		post.PostedOn = DateTime.UtcNow.AddHours(-5);
+		post.Active = true;
+		_postRepository.AddPost(post);
+		_postRepository.SaveChanges();
 
 		return RedirectToAction("Index");
 	}
 
 
 	[HttpGet]
-	[Route("Admin/Post/Edit/{id}")]
-	public IActionResult Edit(int id)
+	public IActionResult PostEdit(int id)
 	{
 		// For demonstration, you should fetch from repo. Here, just a sample:
-		var post = PostData.GetPosts().FirstOrDefault(p => p.Id == id);
-		return View("~/Views/Admin/Post/Edit.cshtml");
+		var post = _postRepository.GetPostById(id);
+		ViewBag.Post = post;
+		return View();
 	}
 
 	[HttpPost]
-	[Route("Admin/Post/Edit/{id}")]
 	[ValidateAntiForgeryToken]
-	public IActionResult Edit(int id, Post post)
+	public IActionResult PostEdit(int id, Post post)
 	{
 		if (id != post.Id)
 			return BadRequest();
@@ -75,4 +76,14 @@ public class AdminController : Controller
 		// _postsRepository.UpdatePost(post);
 		return RedirectToAction("Index");
 	}
+
+	[HttpGet]
+	public IActionResult PostDelete(int id)
+	{
+		_postRepository.DeletePost(id);
+		_postRepository.SaveChanges();
+		return RedirectToAction("Index");	
+	}
+	
+	
 }
