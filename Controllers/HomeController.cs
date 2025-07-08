@@ -39,7 +39,7 @@ public class HomeController : Controller
 	public IActionResult SubmitPost(Post post)
 	{
 		// Convert UTC to EST (UTC-5) for posting date
-		post.PostedOn = DateTime.UtcNow.AddHours(-5);
+		post.CreatedAt = DateTime.UtcNow.AddHours(-5);
 		post.Active = false;
 		_postRepository.AddPost(post);
 		_postRepository.SaveChanges();

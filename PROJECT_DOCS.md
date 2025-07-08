@@ -8,7 +8,8 @@ Curated blog posts and articles from across the internet that I find worthy of s
 How It Works
 ===========================================
 I link out to a blog post or article that I like and add some commentary. Users are also
-able to submit links. Users sign in to be able to provide their own responses to the link.
+able to submit links for consideration. Users sign in to be able to provide their own 
+responses to the links shared on the site.
 
 
 Front Page

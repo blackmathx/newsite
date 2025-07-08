@@ -45,7 +45,7 @@ public class AdminController : Controller
 		}
 
 		// Convert UTC to EST (UTC-5) for posting date
-		post.PostedOn = DateTime.UtcNow.AddHours(-5);
+		post.CreatedAt = DateTime.UtcNow.AddHours(-5);
 		post.Active = true;
 		_postRepository.AddPost(post);
 		_postRepository.SaveChanges();

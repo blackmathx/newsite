@@ -2,7 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace newsite.Models;
+namespace newsite.Models
+{
 
 public class UserComment{
 
@@ -14,4 +15,5 @@ public class UserComment{
       public bool Active { get; set; }
       public string? Comment { get; set; }
       public DateTime CreatedAt { get; set; }
+}
 }
