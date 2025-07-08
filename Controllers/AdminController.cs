@@ -9,11 +9,17 @@ public class AdminController : Controller
 {
 	private readonly ILogger<AdminController> _logger;
 	private readonly PostRepository _postRepository;
+	private readonly SubmissionRepository _submissionRepository;
 
-	public AdminController(ILogger<AdminController> logger, PostRepository postRepository)
+	public AdminController(
+		ILogger<AdminController> logger, 
+		PostRepository postRepository,
+		SubmissionRepository submissionRepository
+		)
 	{
 		_logger = logger;
 		_postRepository = postRepository;
+		_submissionRepository = submissionRepository;
 	}
 
 	public IActionResult Index()
@@ -83,6 +89,14 @@ public class AdminController : Controller
 		_postRepository.DeletePost(id);
 		_postRepository.SaveChanges();
 		return RedirectToAction("Index");	
+	}
+
+	[HttpGet]
+	public IActionResult Submissions()
+	{
+		var submissions = _submissionRepository.GetAllSubmissions();
+		ViewBag.Submissions = submissions;
+		return View();
 	}
 	
 	

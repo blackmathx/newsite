@@ -1,0 +1,19 @@
+
+<p>Submissions</p>
+
+@{
+	ViewData["Title"] = "Submissions";
+}
+
+@foreach (var submission in ViewBag.Submissions)
+{
+	<div class="submission">
+		<h3>@submission.Title</h3>
+		<p>@submission.URL</p>
+		<p><strong>Submitted by:</strong> @submission.SubmittedBy</p>
+		<p><strong>Date:</strong> @submission.CreatedAt.ToShortDateString()</p>
+		<p><strong>Status:</strong> @submission.Active</p>
+		<a href="@Url.Action("EditSubmission", "Admin", new { id = submission.Id })" class="btn btn-primary">Edit</a>
+		<a href="@Url.Action("DeleteSubmission", "Admin", new { id = submission.Id })" class="btn btn-danger">Delete</a>
+	</div>
+}

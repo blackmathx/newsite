@@ -6,14 +6,23 @@ using newsite.Models;
 
 namespace newsite.Services
 {
-      public class SubmissionRepository 
-      {
-            private readonly AppDbContext _context;
+	public class SubmissionRepository
+	{
+		private readonly AppDbContext _context;
 
-            public SubmissionRepository(AppDbContext context)
-            {
-                  _context = context;
-            }
+		public SubmissionRepository(AppDbContext context)
+		{
+			_context = context;
+		}
+
+		public List<Submission> GetAllSubmissions()
+		{
+			return _context.Submissions
+				.Where(s => s.Active)
+				.OrderByDescending(s => s.CreatedAt)
+				.ToList();
+		}
+
       }
 
 
