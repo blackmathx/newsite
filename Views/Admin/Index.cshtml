@@ -4,7 +4,7 @@
 
 
     <!-- <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="PostAdd">Add Post</a> -->
-    <a class="btn btn-primary" asp-action="PostAdd" asp-controller="Admin" >Add Post</a>
+    <a class="btn btn-primary btn-sm" asp-action="PostAdd" asp-controller="Admin" >Add Post</a>
 
 
 <table class="table">
@@ -24,8 +24,8 @@
 {
     <tr>
         <td>
-			<a href="/Admin/PostDelete/@post.Id" class="btn btn-danger">Delete</a>
-			<a href="/Admin/PostEdit/@post.Id" class="btn btn-primary">Edit</a>
+			<a href="/Admin/PostDelete/@post.Id" class="btn btn-danger btn-sm">Delete</a>
+			<a href="/Admin/PostEdit/@post.Id" class="btn btn-primary btn-sm">Edit</a>
 		</td>
         <td>@post.PostedOn.ToString("MMM dd, yyyy")</td>
 		<td>@post.SubmittedBy</td>
