@@ -12,7 +12,7 @@ public class AdminController : Controller
 	private readonly SubmissionRepository _submissionRepository;
 
 	public AdminController(
-		ILogger<AdminController> logger, 
+		ILogger<AdminController> logger,
 		PostRepository postRepository,
 		SubmissionRepository submissionRepository
 		)
@@ -88,7 +88,7 @@ public class AdminController : Controller
 	{
 		_postRepository.DeletePost(id);
 		_postRepository.SaveChanges();
-		return RedirectToAction("Index");	
+		return RedirectToAction("ActivePosts");
 	}
 
 	[HttpGet]
@@ -98,6 +98,15 @@ public class AdminController : Controller
 		ViewBag.Submissions = submissions;
 		return View();
 	}
-	
-	
+
+	[HttpGet]
+	public async Task<IActionResult> ActivePosts()
+	{
+		var activePosts = await _postRepository.GetActivePosts();
+		ViewBag.Posts = activePosts;
+		return View();
+
+	}
+
+
 }
