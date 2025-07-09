@@ -1,0 +1,23 @@
+
+@{
+	Layout = "AdminLayout";
+}
+
+@model newsite.ViewModels.PostViewModel
+
+<form asp-action="PostAdd" method="post" class="form-horizontal"  >
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Url"></label>
+        <input asp-for="Url" class="form-control"/>
+        <span asp-validation-for="Url" class="text-danger"></span>
+    </div>
+    
+    <button type="submit" class="btn btn-primary m-2">Save</button>
+    <a asp-action="Index" class="btn btn-secondary m-2">Cancel</a>
+    
+</form>

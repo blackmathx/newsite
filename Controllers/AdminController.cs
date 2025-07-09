@@ -108,5 +108,11 @@ public class AdminController : Controller
 
 	}
 
+	[HttpGet]
+	public async Task<IActionResult> DraftPosts()
+	{
+		ViewBag.Posts = await _postRepository.GetDraftPosts();
+		return View();
+	}
 
 }

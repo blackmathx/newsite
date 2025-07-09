@@ -23,7 +23,18 @@ namespace newsite.Services
 				.ToList();
 		}
 
-      }
+		public async Task RemoveSubmission(int id)
+		{
+			Submission? submission = await _context.Submissions.FirstOrDefaultAsync(s => s.Id == id);
+			if (submission != null)
+			{
+				submission.Active = false;
+				_context.Update(submission);
+				await _context.SaveChangesAsync();
+			}
+		}
+
+	  }
 
 
 }

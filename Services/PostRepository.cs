@@ -50,5 +50,13 @@ namespace newsite.Services
 		{
 			_context.SaveChanges();
 		}
+
+		public async Task<List<Post>> GetDraftPosts()
+		{
+			return await _context.Posts
+				.AsNoTracking()
+				.Where(post => !post.Active)
+				.ToListAsync();
+		}
 	}
 }
