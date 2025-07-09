@@ -12,19 +12,21 @@
 
 <body>
 	<header>
-	<nav style="max-width:1400px; margin-left:auto; margin-right:auto;">
-		<div class="text-center py-3">
+		<nav style="max-width:1400px; margin-left:auto; margin-right:auto;">
+			<div class="text-center py-3">
 				<h1 class="display-4">Newsite</h1>
 				<p>This is a curated news site for the interesting news</p>
 				<div class="nav justify-content-center">
-				<a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Index</a>
-				<a asp-area="" asp-controller="Home" asp-action="Donate" class="nav-link">Donate</a>
-				<a asp-area="" asp-controller="Home" asp-action="Submit" class="nav-link">Submit</a>
-				<a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Login</a>
+					<a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Index</a>
+					<a asp-area="" asp-controller="Home" asp-action="Donate" class="nav-link">Donate</a>
+					<a asp-area="" asp-controller="Home" asp-action="Submit" class="nav-link">Submit</a>
+					<a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-link">Admin</a>
+					<a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Login</a>
+				</div>
 			</div>
-			<div>
-	</nav>
-	<header>
+		</nav>
+	</header>
+
 
 	<div class="container">
 		<main role="main" class="pb-3">
@@ -41,6 +43,6 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+	
 </body>
-
 </html>

@@ -1,10 +1,10 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using newsite.Models;
+using newsite.Services;
 
 namespace newsite.Controllers;
 
-using newsite.Services;
 
 public class HomeController : Controller
 {
