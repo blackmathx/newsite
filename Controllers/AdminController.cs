@@ -24,7 +24,6 @@ public class AdminController : Controller
 
 	public IActionResult Index()
 	{
-		ViewBag.Posts = _postRepository.GetAllPosts();
 		return View();
 	}
 
@@ -49,16 +48,28 @@ public class AdminController : Controller
 		{
 			return View(post);
 		}
-
 		// Convert UTC to EST (UTC-5) for posting date
 		post.CreatedAt = DateTime.UtcNow.AddHours(-5);
-		post.Active = true;
+		post.Active = false;
 		_postRepository.AddPost(post);
 		_postRepository.SaveChanges();
-
 		return RedirectToAction("Index");
 	}
 
+	[HttpGet]
+	public IActionResult PublishPost(int id)
+	{
+		var post = _postRepository.GetPostById(id);
+		if (post == null)
+		{
+			return NotFound();
+		}
+		post.Active = true;
+		post.CreatedAt = DateTime.UtcNow.AddHours(-5); // Convert to EST
+		_postRepository.UpdatePost(post);
+		_postRepository.SaveChanges();
+		return RedirectToAction("Index");
+	}
 
 	[HttpGet]
 	public IActionResult PostEdit(int id)
@@ -88,7 +99,30 @@ public class AdminController : Controller
 	{
 		_postRepository.DeletePost(id);
 		_postRepository.SaveChanges();
-		return RedirectToAction("ActivePosts");
+		return RedirectToAction("DraftPosts");
+	}
+
+	[HttpGet]
+	public IActionResult CreatePost()
+	{
+		return View();
+	}
+
+
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public IActionResult CreatePost(Post post)
+	{
+		if (!ModelState.IsValid)
+		{
+			return View(post);
+		}
+		// Convert UTC to EST (UTC-5) for posting date
+		post.CreatedAt = DateTime.UtcNow.AddHours(-5);
+		post.Active = false;
+		_postRepository.AddPost(post);
+		_postRepository.SaveChanges();
+		return RedirectToAction("Index");
 	}
 
 	[HttpGet]
@@ -100,13 +134,47 @@ public class AdminController : Controller
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> ActivePosts()
+	public IActionResult SubmissionDetail(int id)
 	{
-		var activePosts = await _postRepository.GetActivePosts();
-		ViewBag.Posts = activePosts;
+		var submission = _submissionRepository.GetSubmissionById(id);
+		if (submission == null)
+		{
+			return NotFound();
+		}
+		ViewBag.Submission = submission;
 		return View();
-
 	}
+
+	[HttpGet]
+	public IActionResult DeleteSubmission(int id)
+	{
+		_submissionRepository.RemoveSubmission(id);
+		return RedirectToAction("Submissions");
+	}
+
+	[HttpGet]
+	public IActionResult SubmissionConvertToDraft(int id)
+	{
+		var submission = _submissionRepository.GetSubmissionById(id);
+		if (submission == null)
+		{
+			return NotFound();
+		}
+
+		var post = new Post
+		{
+			Title = submission.Title,
+			Url = submission.Url,
+			CreatedAt = DateTime.UtcNow.AddHours(-5), // Convert to EST
+			Active = false
+		};
+
+		_postRepository.AddPost(post);
+		_postRepository.SaveChanges();
+
+		return RedirectToAction("Index");
+	}
+
 
 	[HttpGet]
 	public async Task<IActionResult> DraftPosts()

@@ -58,5 +58,11 @@ namespace newsite.Services
 				.Where(post => !post.Active)
 				.ToListAsync();
 		}
+
+		public void UpdatePost(Post post)
+		{
+			_context.Posts.Update(post);
+			_context.SaveChanges();
+		}
 	}
 }

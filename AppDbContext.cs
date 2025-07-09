@@ -12,7 +12,6 @@ public class AppDbContext : DbContext
 
 	}
 
-	public DbSet<Employee> Employees { get; set; }
 	public DbSet<Post> Posts { get; set; }
 	public DbSet<UserComment> UserComments { get; set; }
 	public DbSet<Submission> Submissions { get; set; }

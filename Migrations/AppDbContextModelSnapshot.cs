@@ -21,34 +21,6 @@ namespace newsite.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("newsite.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<long>("Salary")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("SubmittedBy")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
-                });
-
             modelBuilder.Entity("newsite.Models.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -109,7 +81,7 @@ namespace newsite.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<string>("URL")
+                    b.Property<string>("Url")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

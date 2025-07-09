@@ -10,16 +10,44 @@ public class HomeController : Controller
 {
 	private readonly ILogger<HomeController> _logger;
 	private readonly PostRepository _postRepository;
+	private readonly SubmissionRepository _submissionRepository;
 
-	public HomeController(ILogger<HomeController> logger, PostRepository postRepository)
+	public HomeController(
+		ILogger<HomeController> logger,
+		PostRepository postRepository,
+		SubmissionRepository submissionRepository
+		)
 	{
 		_logger = logger;
 		_postRepository = postRepository;
+		_submissionRepository = submissionRepository;
 	}
 
 	public async Task<IActionResult> Index()
 	{
 		ViewBag.Posts = await _postRepository.GetActivePosts();
+		return View();
+	}
+
+	[HttpGet]
+	public IActionResult SubmitArticle()
+	{
+		return View();
+	}
+	[HttpPost]
+	public IActionResult SubmitArticle(Submission submission)
+	{
+		// Convert UTC to EST (UTC-5) for posting date
+		submission.CreatedAt = DateTime.UtcNow.AddHours(-5);
+		submission.Active = true;
+		submission.SubmittedBy = "default anon";
+		_submissionRepository.AddSubmission(submission);
+	
+		return RedirectToAction("Index");
+	}
+
+	public IActionResult Donate()
+	{
 		return View();
 	}
 
@@ -29,26 +57,6 @@ public class HomeController : Controller
 	{
 		return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 	}
-
-	[HttpGet]
-	public IActionResult SubmitPost()
-	{
-		return View();
-	}
-	[HttpPost]
-	public IActionResult SubmitPost(Post post)
-	{
-		// Convert UTC to EST (UTC-5) for posting date
-		post.CreatedAt = DateTime.UtcNow.AddHours(-5);
-		post.Active = false;
-		_postRepository.AddPost(post);
-		_postRepository.SaveChanges();
-		return RedirectToAction("Index");
-	}
-
-	public IActionResult Donate()
-	{
-		return View();
-	}
+	
 	
 }

@@ -15,6 +15,12 @@ namespace newsite.Services
 			_context = context;
 		}
 
+		public void AddSubmission(Submission submission)
+		{
+			_context.Submissions.Add(submission);
+			_context.SaveChanges();
+		}
+
 		public List<Submission> GetAllSubmissions()
 		{
 			return _context.Submissions
@@ -23,15 +29,20 @@ namespace newsite.Services
 				.ToList();
 		}
 
-		public async Task RemoveSubmission(int id)
+		public void RemoveSubmission(int id)
 		{
-			Submission? submission = await _context.Submissions.FirstOrDefaultAsync(s => s.Id == id);
+			Submission? submission = _context.Submissions.FirstOrDefault(s => s.Id == id);
 			if (submission != null)
 			{
 				submission.Active = false;
 				_context.Update(submission);
-				await _context.SaveChangesAsync();
+				_context.SaveChanges();
 			}
+		}
+
+		public Submission? GetSubmissionById(int id)
+		{
+			return _context.Submissions.FirstOrDefault(s => s.Id == id);
 		}
 
 	  }
