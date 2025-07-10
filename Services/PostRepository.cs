@@ -25,12 +25,14 @@ namespace newsite.Services
 			return await _context.Posts
 				.AsNoTracking()
 				.Where(post => post.Active)
+				.OrderByDescending(post => post.CreatedAt)
 				.ToListAsync();
 		}
 
 		public void AddPost(Post post)
 		{
 			_context.Posts.Add(post);
+			_context.SaveChanges();
 		}
 
 		public Post? GetPostById(int id)
@@ -44,10 +46,12 @@ namespace newsite.Services
 			if (post == null) return;
 
 			_context.Posts.Remove(post);
+			_context.SaveChanges();
 		}
 
-		public void SaveChanges()
+		public void Update(Post post)
 		{
+			_context.Posts.Update(post);
 			_context.SaveChanges();
 		}
 

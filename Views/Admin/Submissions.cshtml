@@ -2,7 +2,7 @@
 	Layout = "AdminLayout";
 }
 
-<p>Submissions</p>
+<h1>Submissions</h1>
 
 @{
 	ViewData["Title"] = "Submissions";
@@ -11,11 +11,12 @@
 	<thead>
 		<tr>
 			<th></th>
+			<th>Submitted By</th>
 			<th>Title</th>
 			<th>Url</th>
-			<th>Submitted By</th>
+			<th>Comment</th>
 			<th>Created At</th>		
-			<th>Status</th>
+			<th>Active</th>
 		</tr>
 	</thead>
 
@@ -24,13 +25,14 @@
 {
 	<tr>
 		<td>		
-			<a href="@Url.Action("EditSubmission", "Admin", new { id = submission.Id })" class="btn btn-primary">Edit</a>
-			<a href="@Url.Action("DeleteSubmission", "Admin", new { id = submission.Id })" class="btn btn-danger">Delete</a>
+			<a href="@Url.Action("DeleteSubmission", "Admin", new { id = submission.Id })" class="btn btn-danger btn-sm">Delete</a>
+			<a href="@Url.Action("SubmissionConvertToDraft", "Admin", new { id = submission.Id })" class="btn btn-primary btn-sm">Draft Post</a> 
 		</td>
 	
-		<td>@submission.Title</td>
-		<td>@submission.Url</td>
 		<td>@submission.SubmittedBy</td>
+		<td>@submission.Title</td>
+		<td><a href="@submission.Url" target="_blank">@submission.Url</a></td>
+		<td>@submission.Comment</td>
 		<td>@submission.CreatedAt.ToShortDateString()</td>
 		<td>@submission.Active</td>
 	</tr>

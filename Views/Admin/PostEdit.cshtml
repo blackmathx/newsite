@@ -2,20 +2,52 @@
 	Layout = "AdminLayout";
 }
 
-<p>edit post</p>
+<h1>Post</h1>
 
-<!-- display the Post in the ViewBag -->
 @{
     var post = ViewBag.Post;
 }
 @if (post != null)
 {
-    <h1>@post.Title</h1>
-    <p>@post.Url</p>
-    <p>@post.Id</p>
-    <p>Published on: @post.CreatedAt.ToString("MMMM dd, yyyy")</p>
+    <form asp-controller="Admin" asp-action="PostEdit" asp-route-id="@post.Id" method="post" id="editPostForm">
+        <div class="mb-2">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" value="@post.Title" disabled />
+        </div>
+        <div class="mb-2">
+            <label for="Url" class="form-label">URL</label>
+            <input type="text" class="form-control" id="Url" name="Url" value="@post.Url" disabled />
+        </div>
+        <div class="mb-2">
+            <label for="Commentary" class="form-label">Commentary</label>
+            <textarea class="form-control" id="Commentary" name="Commentary" rows="2" disabled>@post.Commentary</textarea>
+        </div>
+        <div class="mb-2">
+            <label for="Source" class="form-label">Source</label>
+            <input type="text" class="form-control" id="Source" name="Source" value="@post.Source" disabled />
+        </div>
+        <input type="hidden" name="Id" value="@post.Id" />
+        <button type="button" class="btn btn-secondary m-2" id="editBtn">Edit</button>
+        <button type="submit" class="btn btn-primary m-2" id="saveBtn" disabled>Save</button>
+    </form>
+    <form asp-controller="Admin" asp-action="PublishPost" asp-route-id="@post.Id" method="post" class="mt-2">
+        <button type="submit" class="btn btn-success">Publish</button>
+    </form>
+    <script>
+        const editBtn = document.getElementById('editBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const form = document.getElementById('editPostForm');
+        editBtn.addEventListener('click', function() {
+            form.querySelectorAll('input, textarea').forEach(el => {
+                if (el.name !== 'Id') el.disabled = false;
+            });
+            saveBtn.disabled = false;
+            editBtn.disabled = true;
+        });
+    </script>
 }
 else
 {
     <p>No post found.</p>
 }
+

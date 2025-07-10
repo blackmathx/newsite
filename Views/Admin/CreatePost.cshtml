@@ -5,6 +5,8 @@
 
 @model newsite.ViewModels.PostViewModel
 
+<h1>Created Draft</h1>
+
 <form asp-action="PostAdd" method="post" class="form-horizontal"  >
     <div class="form-group">
         <label asp-for="Title"></label>
@@ -16,8 +18,12 @@
         <input asp-for="Url" class="form-control"/>
         <span asp-validation-for="Url" class="text-danger"></span>
     </div>
+	<div class="form-group">
+        <label asp-for="Commentary"></label>
+        <textarea asp-for="Commentary" class="form-control"></textarea>
+        <span asp-validation-for="Commentary" class="text-danger"></span>
+    </div>
     
-    <button type="submit" class="btn btn-primary m-2">Save</button>
     <a asp-action="Index" class="btn btn-secondary m-2">Cancel</a>
-    
+    <button type="submit" class="btn btn-primary m-2">Save</button>
 </form>

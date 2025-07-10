@@ -34,13 +34,14 @@ public class HomeController : Controller
 	{
 		return View();
 	}
+
 	[HttpPost]
 	public IActionResult SubmitArticle(Submission submission)
 	{
 		// Convert UTC to EST (UTC-5) for posting date
 		submission.CreatedAt = DateTime.UtcNow.AddHours(-5);
 		submission.Active = true;
-		submission.SubmittedBy = "default anon";
+
 		_submissionRepository.AddSubmission(submission);
 	
 		return RedirectToAction("Index");

@@ -52,22 +52,6 @@ public class AdminController : Controller
 		post.CreatedAt = DateTime.UtcNow.AddHours(-5);
 		post.Active = false;
 		_postRepository.AddPost(post);
-		_postRepository.SaveChanges();
-		return RedirectToAction("Index");
-	}
-
-	[HttpGet]
-	public IActionResult PublishPost(int id)
-	{
-		var post = _postRepository.GetPostById(id);
-		if (post == null)
-		{
-			return NotFound();
-		}
-		post.Active = true;
-		post.CreatedAt = DateTime.UtcNow.AddHours(-5); // Convert to EST
-		_postRepository.UpdatePost(post);
-		_postRepository.SaveChanges();
 		return RedirectToAction("Index");
 	}
 
@@ -88,9 +72,23 @@ public class AdminController : Controller
 			return BadRequest();
 		if (!ModelState.IsValid)
 			return View(post);
-		// You should add an Update method to PostsRepository for real use
-		// For now, just a placeholder
-		// _postsRepository.UpdatePost(post);
+
+		_postRepository.UpdatePost(post);
+
+		return RedirectToAction("Index");
+	}
+
+	[HttpPost]
+	public IActionResult PublishPost(int id)
+	{
+		var post = _postRepository.GetPostById(id);
+		if (post == null)
+		{
+			return NotFound();
+		}
+		post.Active = true;
+		post.CreatedAt = DateTime.UtcNow.AddHours(-5); // Convert to EST
+		_postRepository.UpdatePost(post);
 		return RedirectToAction("Index");
 	}
 
@@ -98,8 +96,7 @@ public class AdminController : Controller
 	public IActionResult PostDelete(int id)
 	{
 		_postRepository.DeletePost(id);
-		_postRepository.SaveChanges();
-		return RedirectToAction("DraftPosts");
+		return RedirectToAction("Drafts");
 	}
 
 	[HttpGet]
@@ -121,7 +118,6 @@ public class AdminController : Controller
 		post.CreatedAt = DateTime.UtcNow.AddHours(-5);
 		post.Active = false;
 		_postRepository.AddPost(post);
-		_postRepository.SaveChanges();
 		return RedirectToAction("Index");
 	}
 
@@ -161,6 +157,9 @@ public class AdminController : Controller
 			return NotFound();
 		}
 
+		submission.Active = false;
+		_submissionRepository.RemoveSubmission(id);
+
 		var post = new Post
 		{
 			Title = submission.Title,
@@ -170,14 +169,13 @@ public class AdminController : Controller
 		};
 
 		_postRepository.AddPost(post);
-		_postRepository.SaveChanges();
 
-		return RedirectToAction("Index");
+		return RedirectToAction("Drafts");
 	}
 
 
 	[HttpGet]
-	public async Task<IActionResult> DraftPosts()
+	public async Task<IActionResult> Drafts()
 	{
 		ViewBag.Posts = await _postRepository.GetDraftPosts();
 		return View();
