@@ -7,9 +7,8 @@
 }
 @if (post != null)
 {
-    <h1>@post.Title</h1>
-    <p>@post.Url</p>
-    <p>@post.Id</p>
+   <a href="@post.Url"><h3>@post.Title</h3></a>
+    
     <p>Published on: @post.CreatedAt.ToString("MMMM dd, yyyy")</p>
 
 	<p>@post.Commentary</p>
