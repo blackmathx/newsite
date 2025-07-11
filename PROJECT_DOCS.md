@@ -7,8 +7,8 @@ Curated blog posts and articles from across the internet that I find worthy of s
 
 How It Works
 ===========================================
-I link out to a blog post or article that I like and add some commentary. Users are also
-able to submit links for consideration. Users sign in to be able to provide their own 
+I link out to a blog post or articles that I like along with some added commentary. Users 
+are able to submit links for consideration. Users sign in to be able to provide their own 
 responses to the links shared on the site.
 
 
@@ -63,25 +63,30 @@ my interest. I will skip lunch tomorrow to save the $20 to go see it.”
 
 
 
+
+
 Development
 ===========================================
-* docker-compose.yml starts pgadmin, enabling an insight into the production or 
-  development databases.
+* docker-compose.yml starts pgadmin, enabling an insight into the production or development databases.
+* development database is CompanyA on AWS, production is called newsite
 
 
 Deployment
 =========================================== 
-The site is dockerized and deployed to {where?}. The database is postgres and hosted
-on AWS free tier. 
+* The site is dockerized and deployed to Elastic Container Registry for deployment on App Runner
+* The database is postgres and hosted on AWS free tier. 
+* The production datbase is newsite, the devlopment database is CompanyA
+* Migrations are configured to run on app startup
+
 
 
 Database
 ===========================================
-* There are two databases, development called {what?} and the production called {what?}.
+* There are two databases, development called CompanyA, and the production called newsite.
 * When ready to deploy, the connection string needs modified.
-* The field and column "bool Active" indicates a record is acxtive or deleted.
+* The field and column "bool Active" indicates a record is active, ie deleted.
 
 
 Source Code
 ===========================================
-* 
+* github.com/blackmathx/newsite

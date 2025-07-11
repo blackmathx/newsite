@@ -44,13 +44,14 @@ public class HomeController : Controller
 
 		_submissionRepository.AddSubmission(submission);
 
-		return RedirectToAction("Index");
+		return View("SubmitArticleSuccess");
 	}
 
 	public IActionResult Donate()
 	{
 		return View();
 	}
+
 
 
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
