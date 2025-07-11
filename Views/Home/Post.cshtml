@@ -1,0 +1,20 @@
+
+
+
+<!-- display the Post in the ViewBag -->
+@{
+    var post = ViewBag.Post;
+}
+@if (post != null)
+{
+    <h1>@post.Title</h1>
+    <p>@post.Url</p>
+    <p>@post.Id</p>
+    <p>Published on: @post.CreatedAt.ToString("MMMM dd, yyyy")</p>
+
+	<p>@post.Commentary</p>
+}
+else
+{
+    <p>No post found.</p>
+}

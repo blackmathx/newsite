@@ -19,12 +19,12 @@
             <input type="text" class="form-control" id="Url" name="Url" value="@post.Url" disabled />
         </div>
         <div class="mb-2">
-            <label for="Commentary" class="form-label">Commentary</label>
-            <textarea class="form-control" id="Commentary" name="Commentary" rows="2" disabled>@post.Commentary</textarea>
-        </div>
-        <div class="mb-2">
             <label for="Source" class="form-label">Source</label>
             <input type="text" class="form-control" id="Source" name="Source" value="@post.Source" disabled />
+        </div>
+        <div class="mb-2">
+            <label for="Commentary" class="form-label">Commentary</label>
+            <textarea class="form-control" id="Commentary" name="Commentary" rows="2" disabled>@post.Commentary</textarea>
         </div>
         <input type="hidden" name="Id" value="@post.Id" />
         <button type="button" class="btn btn-secondary m-2" id="editBtn">Edit</button>

@@ -6,6 +6,7 @@ public class PostViewModel
 	public bool Active { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
+	public string Source { get; set; } = string.Empty;
 	public string Commentary { get; set; } = string.Empty;
     public DateTime PostedOn { get; set; }
     public string SubmittedBy {get; set; } = string.Empty;

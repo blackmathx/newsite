@@ -43,7 +43,7 @@ public class HomeController : Controller
 		submission.Active = true;
 
 		_submissionRepository.AddSubmission(submission);
-	
+
 		return RedirectToAction("Index");
 	}
 
@@ -58,6 +58,20 @@ public class HomeController : Controller
 	{
 		return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 	}
-	
+
+	[HttpGet]
+	public IActionResult Post(int id)
+	{
+		Console.WriteLine($"Fetching post with ID: {id}");
+		var post = _postRepository.GetPostById(id);
+		if (post == null)
+		{
+			return NotFound();
+		}
+
+		ViewBag.Post = post;
+		return View();
+	}
+
 	
 }
