@@ -1,5 +1,7 @@
-### Newsite
+### Newsite - ([website](https://github.com/blackmathx/newsite))
 
-Curated list of blog posts and articles from across the web.
+#### Curated list of blog posts and articles from across the web.
 
-Curated blog posts and articles from across the internet that I find worthy of sharing.
+<br/>
+
+ASP.NET Core, EF Core, Bootstrap, Postgres, AWS App Runner
