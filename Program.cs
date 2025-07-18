@@ -17,7 +17,8 @@ if (environment.IsDevelopment())
 else
 {
 	// Use environment variable in production
-	connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+	//connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+	connectionString = builder.Configuration["DefaultConnection"];
 
 	if (string.IsNullOrEmpty(connectionString))
 	{
