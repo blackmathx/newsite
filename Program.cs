@@ -1,24 +1,33 @@
 using newsite;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
-var builder = WebApplication.CreateBuilder(args);
-
-
-// handle connection for local vs prod
-var environment = builder.Environment;
-string? connectionString;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 
-if (environment.IsDevelopment())
+// Database connection setup
+string? connectionString = null;
+
+if (builder.Environment.IsDevelopment())
 {
 	// Use connection string from appsettings.Development.json
 	connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 }
 else
 {
-	// Use environment variable in production
-	//connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
-	connectionString = builder.Configuration["DefaultConnection"];
+	// Get connection string from environment variable provided by App Runner configuration
+	var secretJson = Environment.GetEnvironmentVariable("dbConn");
+	if (secretJson != null)
+	{
+		var secretDict = JsonSerializer.Deserialize<Dictionary<string, string>>(secretJson);
+
+		// BO 7/19/25 Replace with TryGetValue
+		// connectionString = secretDict["DBConnection"];
+		if (secretDict != null && secretDict.TryGetValue("DBConnection", out var dbConn))
+		{
+			connectionString = dbConn;
+		}
+	}
 
 	if (string.IsNullOrEmpty(connectionString))
 	{
@@ -26,10 +35,8 @@ else
 	}
 }
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
 
-
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<newsite.Services.PostRepository>();
 builder.Services.AddScoped<newsite.Services.UserCommentRepository>();
@@ -58,13 +65,13 @@ app.UseAuthorization();
 
 // Map any routes that match the pattern "/{action=Index}" to the Home controller methods.
 app.MapControllerRoute(
-    name: "WelcomeRoute",
-    pattern: "/{action=Index}",
-    defaults: new { controller = "Home" });
+	name: "WelcomeRoute",
+	pattern: "/{action=Index}",
+	defaults: new { controller = "Home" });
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 app.Run();
