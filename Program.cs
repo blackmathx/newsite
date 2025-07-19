@@ -1,6 +1,7 @@
 using newsite;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using Microsoft.AspNetCore.HttpOverrides; 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,13 @@ builder.Services.AddScoped<newsite.Services.SubmissionRepository>();
 
 builder.Services.AddControllersWithViews();
 
+// Add this before app.UseRouting()
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 var app = builder.Build();
 
 
@@ -56,12 +64,21 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 
+
+
+
+// Add this early in the middleware pipeline
+app.UseForwardedHeaders();
+app.UseLogUrl(); // Your middleware
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
 
 // Map any routes that match the pattern "/{action=Index}" to the Home controller methods.
 app.MapControllerRoute(
