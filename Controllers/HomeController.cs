@@ -63,7 +63,7 @@ public class HomeController : Controller
 	[HttpGet]
 	public IActionResult Post(int id)
 	{
-		Console.WriteLine($"Fetching post with ID: {id}");
+		
 		var post = _postRepository.GetPostById(id);
 		if (post == null)
 		{
