@@ -22,7 +22,7 @@ else
 	{
 		var secretDict = JsonSerializer.Deserialize<Dictionary<string, string>>(secretJson);
 
-		// BO 7/19/25 Replace with TryGetValue
+		// CHANGE 7/19/25 Replace with TryGetValue
 		// connectionString = secretDict["DBConnection"];
 		if (secretDict != null && secretDict.TryGetValue("DBConnection", out var dbConn))
 		{
@@ -60,7 +60,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	// The default HSTS value is 30 days. Change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
 
@@ -69,7 +69,7 @@ if (!app.Environment.IsDevelopment())
 
 // Add this early in the middleware pipeline
 app.UseForwardedHeaders();
-app.UseLogUrl(); // Your middleware
+app.UseLogUrl();
 
 
 app.UseHttpsRedirection();

@@ -58,7 +58,6 @@ public class AdminController : Controller
 	[HttpGet]
 	public IActionResult PostEdit(int id)
 	{
-		// For demonstration, you should fetch from repo. Here, just a sample:
 		var post = _postRepository.GetPostById(id);
 		ViewBag.Post = post;
 		return View();
