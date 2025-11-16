@@ -15,7 +15,8 @@ public class LoggingMiddleware
         var realUserIP = GetRealUserIP(context);
         var url = Microsoft.AspNetCore.Http.Extensions.UriHelper.GetDisplayUrl(context.Request);
         
-        _logger.LogWarning($"User IP: {realUserIP} | Request URL: {url}");
+		var message = $"User IP: {realUserIP} | Request URL: {url}";
+        // _logger.LogWarning(message);
         
         await this._next(context);
     }
