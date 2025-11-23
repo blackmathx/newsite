@@ -1,4 +1,4 @@
-### Newsite - ([website](https://z2njpfrmdu.us-east-2.awsapprunner.com/))
+### Newsite - (website: [https://z2njpfrmdu.us-east-2.awsapprunner.com/](https://z2njpfrmdu.us-east-2.awsapprunner.com/))
 
 #### Curated list of blog posts and articles from across the web.
 
