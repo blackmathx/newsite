@@ -15,3 +15,5 @@ Tag the image with the Amazon ECR registry, repository, and image tag name
 
 Docker push command to push to ECR registry
 > docker push <ecr_container_id>/newsite:latest
+
+Database environment variables defined on AWS Key Management Service (KMS) and obtained by ECR
